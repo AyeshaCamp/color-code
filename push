@@ -1,21 +1,27 @@
-def pushToStack(self):
-        global brickW, score
-        b = self.stack[self.initSize - 2]
-        b2 = self.stack[self.initSize - 1]
-        if b2.x <= b.x and not (b2.x + b2.w < b.x):
-            self.stack[self.initSize - 1].w = self.stack[self.initSize - 1].x + self.stack[self.initSize - 1].w - b.x
-            self.stack[self.initSize - 1].x = b.x
-            if self.stack[self.initSize - 1].w > b.w:
-                self.stack[self.initSize - 1].w = b.w
-            self.stack[self.initSize - 1].speed = 0
-            score += 1
-        elif b.x <= b2.x <= b.x + b.w:
-            self.stack[self.initSize - 1].w = b.x + b.w - b2.x
-            self.stack[self.initSize - 1].speed = 0
-            score += 1
-        else:
-            gameOver()
-        for i in range(self.initSize):
-            self.stack[i].y += brickH
+ while loop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                close()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    close()
+                if event.key == pygame.K_r:
+                    gameLoop()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                gameLoop()
+        display.blit(text, textRect)
+        
+        pygame.display.update()
+        clock.tick()
 
-        brickW = self.stack[self.initSize - 1].w
+# Displaying the Score on Screen
+def showScore():
+    font = pygame.font.SysFont("Forte", 30)
+    text = font.render("Score: " + str(score), True, white)
+    display.blit(text, (10, 10))
+
+
+# Close the Window
+def close():
+    pygame.quit()
+    sys.exit()
