@@ -1,4 +1,18 @@
- while loop:
+def gameLoop():
+    global brickW, brickH, score, colorIndex, speed
+    loop = True
+
+    brickH = 10
+    brickW = 100
+    colorIndex = 0
+    speed = 3
+
+    score = 0
+
+    stack = Stack()
+    stack.addNewBrick()
+
+    while loop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 close()
@@ -8,20 +22,18 @@
                 if event.key == pygame.K_r:
                     gameLoop()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                gameLoop()
-        display.blit(text, textRect)
+                stack.pushToStack()
+                stack.addNewBrick()
+                
+
+        display.fill(background)
+
+        stack.move()
+        stack.show()
+
+        showScore()
         
         pygame.display.update()
-        clock.tick()
+        clock.tick(60)
 
-# Displaying the Score on Screen
-def showScore():
-    font = pygame.font.SysFont("Forte", 30)
-    text = font.render("Score: " + str(score), True, white)
-    display.blit(text, (10, 10))
-
-
-# Close the Window
-def close():
-    pygame.quit()
-    sys.exit()
+gameLoop()
