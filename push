@@ -1,0 +1,21 @@
+def pushToStack(self):
+        global brickW, score
+        b = self.stack[self.initSize - 2]
+        b2 = self.stack[self.initSize - 1]
+        if b2.x <= b.x and not (b2.x + b2.w < b.x):
+            self.stack[self.initSize - 1].w = self.stack[self.initSize - 1].x + self.stack[self.initSize - 1].w - b.x
+            self.stack[self.initSize - 1].x = b.x
+            if self.stack[self.initSize - 1].w > b.w:
+                self.stack[self.initSize - 1].w = b.w
+            self.stack[self.initSize - 1].speed = 0
+            score += 1
+        elif b.x <= b2.x <= b.x + b.w:
+            self.stack[self.initSize - 1].w = b.x + b.w - b2.x
+            self.stack[self.initSize - 1].speed = 0
+            score += 1
+        else:
+            gameOver()
+        for i in range(self.initSize):
+            self.stack[i].y += brickH
+
+        brickW = self.stack[self.initSize - 1].w
